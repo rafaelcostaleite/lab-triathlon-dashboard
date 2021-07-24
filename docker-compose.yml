@@ -1,0 +1,50 @@
+version: "3.8"  
+services:
+  datascience-notebook:
+      image: jupyter/datascience-notebook
+      volumes:
+        - /home/rafael/Workspace/Lab-triathlon-dashboard:/home/jovyan
+      ports:
+        - 8888:8888
+        - 8050:8050
+      container_name:   datascience-notebook-container
+      environment:
+       - JUPYTER_ENABLE_LAB=yes
+      network_mode: "host"
+      
+  mysqlsrv:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345678"
+      MYSQL_DATABASE: "projeto"
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/rafael/Apps/mysql/data:/var/lib/mysql
+    network_mode: "host"
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    network_mode: "host"
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - "27017:27017"
+    volumes:
+      - /home/rafael/Apps/mongodb/data:/data/db
+    
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://root:123456@localhost:27017
+    links:
+      - mongo
+
