@@ -1,8 +1,4 @@
-## Diagrama de Integração
-
-Este diagrama ilustra a integração entre o ERP Protheus e a API do Cliente A.
-
-```mermaid
+'''mermaid
 graph LR
     subgraph ERP_Protheus
         A[ERP Protheus]
